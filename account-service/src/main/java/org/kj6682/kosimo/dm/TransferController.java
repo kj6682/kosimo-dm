@@ -1,7 +1,5 @@
 package org.kj6682.kosimo.dm;
 
-import org.hibernate.mapping.List;
-import org.hibernate.type.ListType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -12,22 +10,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 /**
  * Created by luigi on 23.04.16.
  */
 @RestController
-@RequestMapping("/transfer")
-public class Transfer {
+public class TransferController {
 
     @Autowired
     AccountRepository accountRepository;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @Autowired
+    ErrorHandler errorHandler;
+
+    @RequestMapping(value = "/transfer", method = RequestMethod.POST)
     public HttpEntity<String> execute(@RequestParam(value = "debit") String debit,
                                       @RequestParam(value = "credit") String credit,
                                       @RequestParam(value = "amount") BigDecimal amount,
                                       @RequestParam(value = "currency") String currency) {
+
+        validateAccount(debit, credit);
 
         Account from = accountRepository.findOne(Long.decode(debit));
         Account to = accountRepository.findOne(Long.decode(credit));
@@ -39,7 +42,13 @@ public class Transfer {
 
         from = accountRepository.findOne(Long.decode(debit));
 
-        return new ResponseEntity<String>(String.format("Amount for account %s is now %d", debit, from.getBalance().longValue()) , HttpStatus.OK);
+        return new ResponseEntity<>(String.format("Amount for account %s is now %d", debit, from.getBalance().longValue()) , HttpStatus.OK);
 
     }
-}
+
+    void validateAccount(String... ids) {
+        Stream.of(ids).forEach(id ->  this.accountRepository.findById(Long.decode(id).longValue())
+                .orElseThrow(() -> new AccountNotFoundException(id)));
+    }
+
+}//:)

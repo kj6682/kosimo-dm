@@ -23,8 +23,9 @@ public class AccountServiceApplicationTests {
     @Autowired
     AccountRepository accountRepo;
 
+
     @Autowired
-    Transfer transfer;
+    TransferController transferCtrl;
 
     @Before
     public void init() {
@@ -40,14 +41,14 @@ public class AccountServiceApplicationTests {
 
 
     @Test
-    public void contextLoads() {
+    public void goodTransfer() {
 
         assertNotNull(debit);
         assertNotNull(credit);
         assertEquals(100L, debit.getBalance().longValue());
         assertEquals(0L, credit.getBalance().longValue());
 
-        HttpEntity result = transfer.execute(String.valueOf(debit.getId()),
+        HttpEntity result = transferCtrl.execute(String.valueOf(debit.getId()),
                 String.valueOf(credit.getId()),
                 BigDecimal.valueOf(100L),
                 "EUR");

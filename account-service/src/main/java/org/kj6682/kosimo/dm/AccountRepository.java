@@ -1,19 +1,18 @@
 package org.kj6682.kosimo.dm;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  * Created by luigi on 23.04.16.
  */
 
-@RepositoryRestResource(collectionResourceRel = "accounts", path = "accounts")
-interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
+interface AccountRepository extends JpaRepository<Account, Long> {
 
     List<Account> findByOwner(@Param("owner") String owner);
-
+    Optional<Account> findById(Long id);
 
 }
