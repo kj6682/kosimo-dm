@@ -15,4 +15,5 @@ interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
 
     List<Account> findByOwner(@Param("owner") String owner);
 
+
 }

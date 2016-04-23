@@ -57,4 +57,14 @@ class Account {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", owner='" + owner + '\'' +
+                ", balance=" + balance +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
