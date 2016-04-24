@@ -28,8 +28,8 @@ public class AccountController {
 
     @RequestMapping(value = "/accounts/{id}", method = RequestMethod.GET)
     public Account find(@PathVariable("id") String id) {
-        return this.accountRepository.findById(Long.decode(id).longValue())
-                .orElseGet(()-> FakeAccount.UNKNOWN.asAccount());
+        return accountRepository.findById(Long.decode(id).longValue())
+                .orElseThrow(() -> new Main.AccountNotFoundException(id));
     }
 
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
@@ -49,12 +49,8 @@ public class AccountController {
     public Long create(@RequestParam(value = "owner") String owner,
                        @RequestParam(value = "amount") String amount,
                        @RequestParam(value = "type") String type) {
-        Account larva = new Account();
-        larva.setOwner(owner);
-        larva.setBalance(new BigDecimal(amount));
-        larva.setType(type);
-        Account butterfly = accountRepository.save(larva);
-        return butterfly.getId();
+        Account result = accountRepository.save(new Account(owner, type, new BigDecimal(amount)));
+        return result.getId();
     }
 
     @RequestMapping(value = "/accounts/{id}", method = RequestMethod.DELETE)
@@ -88,7 +84,7 @@ public class AccountController {
 
     void validateAccount(String... ids) {
         Stream.of(ids).forEach(id ->  this.accountRepository.findById(Long.decode(id).longValue())
-                .orElseThrow(() -> new AccountNotFoundException(id)));
+                .orElseThrow(() -> new Main.AccountNotFoundException(id)));
     }
 
     /**
@@ -105,7 +101,7 @@ public class AccountController {
             );
         }
 
-        @ExceptionHandler(AccountNotFoundException.class)
+        @ExceptionHandler(Main.AccountNotFoundException.class)
         void accountNotFound(HttpServletResponse response, Exception e) throws IOException {
             response.sendError(
                     HttpStatus.NOT_FOUND.value(),
@@ -121,28 +117,8 @@ public class AccountController {
                     msg
             );
         }
-    }
+    }//:)
 
-    enum FakeAccount{
-        UNKNOWN;
-        Account asAccount() {
-            Account a = new Account();
-            a.setId(Long.MIN_VALUE);
-            a.setOwner("unknown");
-            a.setType("unknown");
-            a.setBalance(BigDecimal.ZERO);
-            return a;
-        };
-    }
 
-    /**
-     * Created by luigi on 23.04.16.
-     */
-    static class AccountNotFoundException extends RuntimeException{
-        AccountNotFoundException(String id) {
-            super("could not find account '" + id + "'.");
-        }
-
-    }
 }//:)
 

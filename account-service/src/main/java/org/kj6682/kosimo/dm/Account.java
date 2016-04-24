@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * Created by luigi on 23.04.16.
  * This is the pure and simple model: the Account
- *
+ * <p>
  * I do not want to expose this class outside of the package
  */
 
@@ -25,6 +25,18 @@ class Account {
     private BigDecimal balance;
 
     private String type;
+
+    public Account() {
+        super();
+    }//JPA
+
+    ;
+
+    public Account(String owner, String type, BigDecimal amount) {
+        this.owner = owner;
+        this.balance = balance;
+        this.type = type;
+    } //telescopes are fine up to a certain number of parameters
 
     public long getId() {
         return id;

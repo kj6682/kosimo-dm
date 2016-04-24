@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.math.BigDecimal;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AccountServiceApplication.class)
+@SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration
 public class AccountServiceApplicationTests {
 
@@ -54,8 +54,6 @@ public class AccountServiceApplicationTests {
                 String.valueOf(credit.getId()),
                 BigDecimal.valueOf(100L),
                 "EUR");
-        assertEquals("Amount for account 5 is now 0", result.getBody());
-        assertEquals("Amount for account 5 is now 0", result.getBody());
 
         debit = accountRepo.findOne(debit.getId());
         credit = accountRepo.findOne(credit.getId());
