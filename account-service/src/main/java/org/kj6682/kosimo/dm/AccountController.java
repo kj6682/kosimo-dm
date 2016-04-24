@@ -39,7 +39,7 @@ public class AccountController {
         return result;
     }
 
-
+    @Feature(value = "${features.action1}")
     @RequestMapping(value = "/accounts/findByOwner/{owner}", method = RequestMethod.GET)
     public List<Account> findByOwner(@PathVariable("owner") String owner) {
         return accountRepository.findByOwner(owner);
@@ -82,7 +82,7 @@ public class AccountController {
 
     }
 
-    void validateAccount(String... ids) {
+    private void validateAccount(String... ids) {
         Stream.of(ids).forEach(id ->  this.accountRepository.findById(Long.decode(id).longValue())
                 .orElseThrow(() -> new Main.AccountNotFoundException(id)));
     }
