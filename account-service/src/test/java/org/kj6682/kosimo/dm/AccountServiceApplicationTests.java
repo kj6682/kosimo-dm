@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.math.BigDecimal;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AccountServiceApplication.class)
+@WebAppConfiguration
 public class AccountServiceApplicationTests {
 
     Account debit;
@@ -25,7 +27,7 @@ public class AccountServiceApplicationTests {
 
 
     @Autowired
-    TransferController transferCtrl;
+    AccountController accountCtrl;
 
     @Before
     public void init() {
@@ -48,7 +50,7 @@ public class AccountServiceApplicationTests {
         assertEquals(100L, debit.getBalance().longValue());
         assertEquals(0L, credit.getBalance().longValue());
 
-        HttpEntity result = transferCtrl.execute(String.valueOf(debit.getId()),
+        HttpEntity result = accountCtrl.transfer(String.valueOf(debit.getId()),
                 String.valueOf(credit.getId()),
                 BigDecimal.valueOf(100L),
                 "EUR");

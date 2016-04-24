@@ -51,7 +51,7 @@ public class AccountServiceApplication {
 			repository.save(account);
 
 			// fetch all customers
-			log.info("Customers found with findAll():");
+			log.info("Accounts found with findAll():");
 			log.info("-------------------------------");
 			for (Account account1 : repository.findAll()) {
 				log.info(account1.toString());
