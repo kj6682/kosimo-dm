@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/kj6682/spooky-config-repo
+          repos:
+            local:
+              pattern: account-service/local*
+              uri: file:///home/luigi/projects/spooky/spooky-config-repo
+server:
+  port: 8888
