@@ -5,7 +5,5 @@ spring:
     name: account-service
   cloud:
     config:
-      label: kosimo
+      label: local
       uri: http://localhost:8888
-features:
-  action1: true

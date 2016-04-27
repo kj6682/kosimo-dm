@@ -23,15 +23,14 @@ public class AccountController {
     @Autowired
     AccountRepository accountRepository;
 
-    @Autowired
-    ErrorHandler errorHandler;
-
+    @Feature(value = "find")
     @RequestMapping(value = "/accounts/{id}", method = RequestMethod.GET)
     public Account find(@PathVariable("id") String id) {
         return accountRepository.findById(Long.decode(id).longValue())
                 .orElseThrow(() -> new Main.AccountNotFoundException(id));
     }
 
+    @Feature(value = "findAll")
     @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     public List<Account> findAll() {
         List<Account> result = new LinkedList<Account>();
@@ -39,12 +38,13 @@ public class AccountController {
         return result;
     }
 
-    @Feature(value = "${features.action1}")
+    @Feature(value = "findByOwner")
     @RequestMapping(value = "/accounts/findByOwner/{owner}", method = RequestMethod.GET)
     public List<Account> findByOwner(@PathVariable("owner") String owner) {
         return accountRepository.findByOwner(owner);
     }
 
+    @Feature(value = "create")
     @RequestMapping(value = "/accounts", method = RequestMethod.POST)
     public Long create(@RequestParam(value = "owner") String owner,
                        @RequestParam(value = "amount") String amount,
@@ -53,6 +53,7 @@ public class AccountController {
         return result.getId();
     }
 
+    @Feature(value = "delete")
     @RequestMapping(value = "/accounts/{id}", method = RequestMethod.DELETE)
     public HttpEntity<String> delete(@PathVariable("id") String id) {
         validateAccount(id);
@@ -60,6 +61,7 @@ public class AccountController {
         return new ResponseEntity<>(String.format("Account (%s) has been removed", id), HttpStatus.OK);
     }
 
+    @Feature(value = "transfer")
     @RequestMapping(value = "/accounts/transfer", method = RequestMethod.POST)
     public HttpEntity<String> transfer(@RequestParam(value = "debit") String debit,
                                        @RequestParam(value = "credit") String credit,
@@ -78,46 +80,40 @@ public class AccountController {
 
         from = accountRepository.findOne(Long.decode(debit));
 
-        return new ResponseEntity<>(String.format("Amount for account %s is now %d", debit, from.getBalance().longValue()) , HttpStatus.OK);
+        return new ResponseEntity<>(String.format("Amount for account %s is now %d", debit, from.getBalance().longValue()), HttpStatus.OK);
 
     }
 
     private void validateAccount(String... ids) {
-        Stream.of(ids).forEach(id ->  this.accountRepository.findById(Long.decode(id).longValue())
+        Stream.of(ids).forEach(id -> this.accountRepository.findById(Long.decode(id).longValue())
                 .orElseThrow(() -> new Main.AccountNotFoundException(id)));
     }
 
-    /**
-     * Created by luigi on 23.04.16.
-     */
-    @ControllerAdvice
-    static class ErrorHandler {
 
-        @ExceptionHandler(UnsupportedOperationException.class)
-        void unsupportedOperation(HttpServletResponse response) throws IOException {
-            response.sendError(
-                    HttpStatus.SERVICE_UNAVAILABLE.value(),
-                    "This feature is currently unavailable"
-            );
-        }
+    @ExceptionHandler(UnsupportedOperationException.class)
+    void unsupportedOperation(HttpServletResponse response, Exception e) throws IOException {
+        response.sendError(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                e.getMessage()
+        );
+    }
 
-        @ExceptionHandler(Main.AccountNotFoundException.class)
-        void accountNotFound(HttpServletResponse response, Exception e) throws IOException {
-            response.sendError(
-                    HttpStatus.NOT_FOUND.value(),
-                    e.getMessage()
-            );
-        }
+    @ExceptionHandler(Main.AccountNotFoundException.class)
+    void accountNotFound(HttpServletResponse response, Exception e) throws IOException {
+        response.sendError(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
+    }
 
-        @ExceptionHandler(Exception.class)
-        void handleGenericException( HttpServletResponse response, Exception e) throws IOException {
-            String msg = "There was an error processing your request: " + e.getMessage();
-            response.sendError(
-                    HttpStatus.BAD_REQUEST.value(),
-                    msg
-            );
-        }
-    }//:)
+    @ExceptionHandler(Exception.class)
+    void handleGenericException(HttpServletResponse response, Exception e) throws IOException {
+        String msg = "There was an error processing your request: " + e.getMessage();
+        response.sendError(
+                HttpStatus.BAD_REQUEST.value(),
+                msg
+        );
+    }
 
 
 }//:)
