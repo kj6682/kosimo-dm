@@ -5,5 +5,5 @@ spring:
     name: account-service
   cloud:
     config:
-      label: kosimo
+      label: dev
       uri: http://localhost:8888

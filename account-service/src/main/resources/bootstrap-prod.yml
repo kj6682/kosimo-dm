@@ -5,6 +5,6 @@ spring:
     name: account-service
   cloud:
     config:
-      label: kosimo-prod
+      label: master
       uri: http://localhost:8888
 
