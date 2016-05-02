@@ -1,0 +1,9 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: media-service
+  cloud:
+    config:
+      label: dev
+      uri: http://localhost:8888
