@@ -19,16 +19,22 @@ we want to define the actions we can do on the entities through them.
 | POST    | /media/{id}  | NA  | NA  | Status:400  | Forbidden action  |
 | PUT     | /media/{id}  | Body:account data with updates  | Status:200 Body:Empty  | Status:404 or 500  | Updates an account  |
 | DELETE  | /media/{id}  | Body:Empty  | Status:200  | Status:404 or 400  | Deletes an account  |
-| GET     | /media/findByTitle/{title}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
-| POST    | /media/findByTitle/{title}  | NA  | NA  | Status:400  | Forbidden action  |
-| PUT     | /media/findByTitle/{title}  | NA  | NA  | Status:400  | Forbidden action  |
-| DELETE  | /media/findByTitle/{title}  | NA  | NA  | Status:400  | Forbidden action  |
-| GET     | /media/findByAuthor/{author}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
-| POST    | /media/findByAuthor/{author}  | NA  | NA  | Status:400  | Forbidden action  |
-| PUT     | /media/findByAuthor/{author}  | NA  | NA  | Status:400  | Forbidden action  |
-| DELETE  | /media/findByAuthor/{author}  | NA  | NA  | Status:400  | Forbidden action  |
-| GET     | /media/findByType/{type}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
-| POST    | /media/findByType/{type}  | NA  | NA  | Status:400  | Forbidden action  |
-| PUT     | /media/findByType/{type}  | NA  | NA  | Status:400  | Forbidden action  |
-| DELETE  | /media/findByType/{type}  | NA  | NA  | Status:400  | Forbidden action  |
+| GET     | /media/title/{title}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
+| POST    | /media/title/{title}  | NA  | NA  | Status:400  | Forbidden action  |
+| PUT     | /media/title/{title}  | NA  | NA  | Status:400  | Forbidden action  |
+| DELETE  | /media/title/{title}  | NA  | NA  | Status:400  | Forbidden action  |
+| GET     | /media/author/{author}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
+| POST    | /media/author/{author}  | NA  | NA  | Status:400  | Forbidden action  |
+| PUT     | /media/author/{author}  | NA  | NA  | Status:400  | Forbidden action  |
+| DELETE  | /media/author/{author}  | NA  | NA  | Status:400  | Forbidden action  |
+| GET     | /media/type/{type}  | Body:Empty  | Status:200 Body:List of Medias | Status:404 or 500  | Retrieves a list of account |
+| POST    | /media/type/{type}  | NA  | NA  | Status:400  | Forbidden action  |
+| PUT     | /media/type/{type}  | NA  | NA  | Status:400  | Forbidden action  |
+| DELETE  | /media/type/{type}  | NA  | NA  | Status:400  | Forbidden action  |
 |    |   |   |   |   |   ||
+
+# Run
+In order to run the service in dev mode and have some dummy data loaded type :
+
+<pre>mvn spring-boot:run -Dspring.profiles.active=dev
+</pre>

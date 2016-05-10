@@ -16,21 +16,21 @@ import java.util.stream.Stream;
  * Created by luigi on 03.05.16.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/media")
 public class MediaController {
 
     @Autowired
     MediaRepository mediaRepository;
 
     @Feature(value = "find")
-    @RequestMapping(value = "/media/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Media find(@PathVariable("id") String id) {
         return mediaRepository.findById(Long.decode(id).longValue())
                 .orElseThrow(() -> new Main.MediaNotFoundException(id));
     }
 
     @Feature(value = "findAll")
-    @RequestMapping(value = "/media", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Media> findAll() {
         List<Media> result = new LinkedList<Media>();
         mediaRepository.findAll().forEach(item -> result.add(item));
@@ -38,26 +38,26 @@ public class MediaController {
     }
 
     @Feature(value = "findByTitle")
-    @RequestMapping(value = "/media/findByTitle/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "title/{title}", method = RequestMethod.GET)
     public List<Media> findByTitle(@PathVariable("title") String title) {
         return mediaRepository.findByTitle(title);
     }
 
     @Feature(value = "findByAuthor")
-    @RequestMapping(value = "/media/findByAuthor/{author}", method = RequestMethod.GET)
+    @RequestMapping(value = "author/{author}", method = RequestMethod.GET)
     public List<Media> findByAuhtor(@PathVariable("author") String author) {
         return mediaRepository.findByAuthor(author);
     }
 
     @Feature(value = "findByType")
-    @RequestMapping(value = "/media/findByType/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "type/{type}", method = RequestMethod.GET)
     public List<Media> findByType(@PathVariable("type") String type) {
-        return mediaRepository.findByType(type);
+        return mediaRepository.findByType(Media.Type.fromId(type));
     }
 
 
     @Feature(value = "create")
-    @RequestMapping(value = "/media", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public Long create(@RequestParam(value = "title") String title,
                        @RequestParam(value = "author") String author,
                        @RequestParam(value = "type") String type,
@@ -71,7 +71,7 @@ public class MediaController {
     }
 
     @Feature(value = "delete")
-    @RequestMapping(value = "/media/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public HttpEntity<String> delete(@PathVariable("id") String id) {
         validateMedia(id);
         mediaRepository.delete(Long.decode(id).longValue());

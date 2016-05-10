@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 
 @SpringBootApplication
@@ -17,13 +18,6 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @Bean
-    public CommandLineRunner demo(MediaRepository repository) {
-        return (evt) -> {
-            repository.save(new Media("Franz Kafka", "Der Prozess", Media.Type.BOOK, "The Red Room:Case A:Shelf 1"));
-        };
-    }
-
     static class MediaNotFoundException extends RuntimeException {
         MediaNotFoundException(String id) {
             super("could not find media '" + id + "'.");
@@ -31,5 +25,15 @@ public class Main {
 
     }//:)
 
-}
+    @Bean
+    @Profile("dev")
+    public CommandLineRunner demo(MediaRepository repository) {
+        return (evt) -> {
+            repository.save(new Media("Franz Kafka", "Der Prozess", Media.Type.BOOK, "The Red Room:Case A:Shelf 1"));
+            repository.save(new Media("George Orwell", "1984", Media.Type.BOOK, "The Red Room:Case A:Shelf 2"));
+            repository.save(new Media("Dreamworks", "Rise of Guardians", Media.Type.MOVIE, "The Red Room:Case B:Shelf 1"));
+        };
+    }//:)
+
+}//:)
 

@@ -1,5 +1,8 @@
 package org.kj6682.kosimo.dm;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +22,18 @@ import java.util.List;
 class Media {
 
     static enum Type{
-        BOOK, MOVIE
+        BOOK, MOVIE;
+
+        public static Type fromId(final String id) {
+            if (id != null) {
+                for (Type type : Type.values()) {
+                    if (id.equalsIgnoreCase(type.name())) {
+                        return type;
+                    }
+                }
+            }
+            return null;
+        }
     }
 
     @Id

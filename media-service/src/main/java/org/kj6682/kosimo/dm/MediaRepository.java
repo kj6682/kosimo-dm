@@ -14,7 +14,7 @@ interface MediaRepository extends JpaRepository<Media, Long> {
 
     List<Media> findByTitle(@Param("title") String title);
     List<Media> findByAuthor(@Param("author") String author);
-    List<Media> findByType(@Param("type") String type);
+    List<Media> findByType(@Param("type") Media.Type type);
 
     Optional<Media> findById(Long id);
 
