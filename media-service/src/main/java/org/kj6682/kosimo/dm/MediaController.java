@@ -52,7 +52,7 @@ public class MediaController {
     @Feature(value = "findByType")
     @RequestMapping(value = "type/{type}", method = RequestMethod.GET)
     public List<Media> findByType(@PathVariable("type") String type) {
-        return mediaRepository.findByType(Media.Type.fromId(type));
+        return mediaRepository.findByType(Media.Type.valueOf(type.toUpperCase()));
     }
 
 

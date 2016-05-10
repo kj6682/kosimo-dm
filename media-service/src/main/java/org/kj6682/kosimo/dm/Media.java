@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by luigi on 23.04.16.
@@ -23,17 +26,6 @@ class Media {
 
     static enum Type{
         BOOK, MOVIE;
-
-        public static Type fromId(final String id) {
-            if (id != null) {
-                for (Type type : Type.values()) {
-                    if (id.equalsIgnoreCase(type.name())) {
-                        return type;
-                    }
-                }
-            }
-            return null;
-        }
     }
 
     @Id
