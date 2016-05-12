@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.media;
 
 import org.junit.Before;
 import org.junit.Ignore;

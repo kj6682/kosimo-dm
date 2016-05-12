@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.commons;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,13 +20,13 @@ class FeatureAspect {
     FeatureConfig featureConfig;
 
 
-    @Around("execution(* MediaController.*(..))")
+    @Around("execution(* org.kj6682.kosimo.*.*Controller.*(..))")
     public Object checkFeature(ProceedingJoinPoint joinPoint) throws Throwable {
 
         try {
-            if(featureConfig.check(extractFeature(joinPoint).value()))
+            if(featureConfig.check(extractFeature(joinPoint).value())) {
                 return joinPoint.proceed();
-
+            }
             throw new UnsupportedOperationException("This feature is not yet implemented.");
 
         } catch (IllegalArgumentException iae) {

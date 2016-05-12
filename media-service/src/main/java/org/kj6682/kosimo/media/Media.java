@@ -1,17 +1,9 @@
-package org.kj6682.kosimo.dm;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
+package org.kj6682.kosimo.media;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by luigi on 23.04.16.
@@ -25,7 +17,7 @@ import java.util.stream.Stream;
 class Media {
 
     static enum Type{
-        BOOK, MOVIE;
+        AUDIO, BOOK, MOVIE;
     }
 
     @Id

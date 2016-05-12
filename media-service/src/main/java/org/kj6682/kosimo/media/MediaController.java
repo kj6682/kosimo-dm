@@ -1,5 +1,6 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.media;
 
+import org.kj6682.kosimo.commons.Feature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -52,7 +53,11 @@ public class MediaController {
     @Feature(value = "findByType")
     @RequestMapping(value = "type/{type}", method = RequestMethod.GET)
     public List<Media> findByType(@PathVariable("type") String type) {
-        return mediaRepository.findByType(Media.Type.valueOf(type.toUpperCase()));
+        List<Media> media = mediaRepository.findByType(Media.Type.valueOf(type.toUpperCase()));
+        if(media.isEmpty()){
+            throw new Main.MediaNotFoundException(type);
+        }
+        return media;
     }
 
 

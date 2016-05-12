@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.commons;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@interface Feature{
+public @interface Feature{
 
     String value();
 }

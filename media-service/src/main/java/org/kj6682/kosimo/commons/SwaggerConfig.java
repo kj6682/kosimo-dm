@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.commons;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

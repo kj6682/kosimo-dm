@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.commons;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -29,6 +29,8 @@ class FeatureConfig {
     @Value("${media.delete}")
     Boolean delete;
 
+    Boolean home = true;
+
     Boolean check(String arg){
 
         if(arg.equals("find"))
@@ -51,6 +53,9 @@ class FeatureConfig {
 
         if(arg.equals("delete"))
             return delete;
+
+        if(arg.equals("home"))
+            return home;
 
         return false;
     }

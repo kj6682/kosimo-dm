@@ -1,4 +1,4 @@
-package org.kj6682.kosimo.dm;
+package org.kj6682.kosimo.media;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.kj6682.kosimo.*")
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -20,7 +20,7 @@ public class Main {
 
     static class MediaNotFoundException extends RuntimeException {
         MediaNotFoundException(String id) {
-            super("could not find media '" + id + "'.");
+            super("could not find media for '" + id + "'.");
         }
 
     }//:)
